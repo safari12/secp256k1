@@ -26,6 +26,20 @@ defmodule Secp256k1Test do
     end
   end
 
+  describe "generate_public_key" do
+    test "should return a valid public from private key" do
+      {_, priv_key} = Secp256k1.generate_key_pair
+      pub_key = Secp256k1.generate_public_key(priv_key)
+      msg = "hello"
+
+      result = priv_key
+      |> Secp256k1.sign(msg)
+      |> Secp256k1.verify_signature(msg, pub_key)
+
+      assert result == true
+    end
+  end
+
   describe "sign" do
     test "should return signature" do
       {_, priv_key} = Secp256k1.generate_key_pair

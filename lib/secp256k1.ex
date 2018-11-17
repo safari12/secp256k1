@@ -14,6 +14,15 @@ defmodule Secp256k1 do
   end
 
   @doc """
+  Generates public key from private in elliptic curve with secp256k1 params
+  """
+  @spec generate_public_key(binary) :: binary
+  def generate_public_key(private_key) do
+    :crypto.generate_key(:ecdh, :crypto.ec_curve(:secp256k1), private_key)
+    |> elem(0)
+  end
+
+  @doc """
   Signs a message with private key
   """
   @spec sign(binary, binary) :: binary
