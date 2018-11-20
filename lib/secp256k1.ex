@@ -37,4 +37,9 @@ defmodule Secp256k1 do
   def verify_signature(signature, msg, public_key) do
     :crypto.verify(:ecdsa, :sha256, msg, signature, [public_key, :secp256k1])
   end
+
+  @spec public_key_tweak_add(binary, binary) :: tuple
+  def public_key_tweak_add(public_key, point) do
+    :libsecp256k1.ec_pubkey_tweak_add(public_key, point)
+  end
 end
